@@ -4,8 +4,26 @@ const tagStyles = {
   "best-seller": "bg-orange-100 text-orange-600",
 };
 
+
+import { useState } from "react";
+import { useCart } from "../../contexts/CartContext";
+import { toast } from "react-toastify";
+
 const ProductCard = ({ product }) => {
   const { name, description, price, period, tag, tagType, features, icon } = product;
+  const { addToCart, cartItems } = useCart();
+  const [added, setAdded] = useState(false);
+
+  const handleAddToCart = () => {
+    if (cartItems.find((item) => item.id === product.id)) {
+      toast.info("Already in cart");
+      return;
+    }
+    addToCart(product);
+    setAdded(true);
+    toast.success("Added to cart");
+    setTimeout(() => setAdded(false), 1500);
+  };
 
   return (
     <div className="bg-white border border-gray-200 rounded-2xl p-6 flex flex-col gap-4 relative hover:shadow-lg transition-shadow">
@@ -36,8 +54,12 @@ const ProductCard = ({ product }) => {
         ))}
       </ul>
 
-      <button className="btn bg-violet-600 hover:bg-violet-700 text-white rounded-full border-none w-full mt-auto">
-        Buy Now
+      <button
+        className={`btn bg-violet-600 hover:bg-violet-700 text-white rounded-full border-none w-full mt-auto ${added ? "opacity-70 cursor-not-allowed" : ""}`}
+        onClick={handleAddToCart}
+        disabled={added}
+      >
+        {added ? "Added to cart" : "Buy Now"}
       </button>
     </div>
   );
