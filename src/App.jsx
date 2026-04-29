@@ -5,6 +5,7 @@ import Stats from './Components/Stats'
 import Products from './Components/Product/Products'
 import Steps from './Components/Steps'
 import Pricing from './Components/Pricing'
+import Footer from './Components/Footer'
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
       <Products></Products>
       <Steps></Steps>
       <Pricing></Pricing>
+      <Footer></Footer>
     </>
   )
 }
